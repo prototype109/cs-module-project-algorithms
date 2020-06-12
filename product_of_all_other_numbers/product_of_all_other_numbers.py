@@ -2,10 +2,45 @@
 Input: a List of integers
 Returns: a List of integers
 '''
+# Understand
+## given a list of ints as input
+## output a list of ints that are products of the rest of the numbers in the list
+    ## excluding the current number found in the index that i'm looking at
+# Plan
+## I think I will just multiply all the values together as the solution for every index and just divide the current indexes
+    ## number so that I get everything but that index for every index and that should be good
+from functools import reduce
+
+def reduce_multiply_arr(arr):
+    num = 1
+
+    zero_index = []
+
+    for index, x in enumerate(arr):
+        if x == 0:
+            zero_index.append(index)
+        else:
+            num *= x
+
+    return (num, zero_index)
+
 def product_of_all_other_numbers(arr):
     # Your code here
+    original_arr = arr[:]
+    multipliedNum, z_index = reduce_multiply_arr(arr)
+    
+    if z_index:
+        arr = [0] * len(arr)
 
-    pass
+        for index in z_index:
+            arr[index] = multipliedNum
+    else:
+        arr = [multipliedNum] * len(arr)
+
+        for index, num in enumerate(original_arr):
+            arr[index] = int(arr[index] / num)
+
+    return arr
 
 
 if __name__ == '__main__':
